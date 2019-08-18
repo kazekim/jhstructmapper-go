@@ -1,6 +1,6 @@
 # JHStructMapper Go!
 
-Sample Package code with GoLang for **mapping field from source struct to the target struct**.  There are options to map only some field, all field or custom map too.
+Sample Package code with GoLang for **mapping field from source struct to the target struct**.  There are options to map only some fields or map all fields.
 
 
 # How to Install
