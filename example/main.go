@@ -5,14 +5,6 @@ import (
 	"github.com/kazekim/jhstructmapper-go"
 )
 
-type Test struct {
-	Param1 string `map:"A"`
-	Param2 int `map:"B"`
-	Param3 float64 `map:"C"`
-	Param4 *string `map:"D"`
-	S SubModel `map:"S"`
-}
-
 type Model struct {
 	A string
 	B int
@@ -39,9 +31,17 @@ func main() {
 	}
 
 	// This will success
+	type Test struct {
+		Param1 string `map:"A"`
+		B int
+		C float64
+		Param4 *string `map:"D"`
+		S SubModel `map:"S"`
+	}
+
 	var test Test
 
-	err := jhstructmapper.ParseStruct(model, &test)
+	err := jhstructmapper.ParseSameFieldName(model, &test)
 	if err != nil {
 		panic(err)
 	}
@@ -59,7 +59,7 @@ func main() {
 	//Assign S to map with G but not field G in Model struct
 
 	var test2 TestFail
-	err = jhstructmapper.ParseStruct(model, &test2)
+	err = jhstructmapper.ParseWithMapTag(model, &test2)
 
 	// It will show error here
 	if err != nil {
