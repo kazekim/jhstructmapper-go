@@ -29,12 +29,14 @@ func Parse (source interface{}, target interface{}, isMapSameFieldName bool) err
 
 		isMapped := false
 
-		for j := 0; j < srv.NumField(); j++ {
+		if sField := srv.FieldByName(mapField); sField.IsValid() {
+			copyValue(sField, tValue)
+			isMapped = true
+		}
 
-			sFieldName := srv.Type().Field(j).Name
-			sValue := srv.Field(j)
-			if mapField == sFieldName || (isMapSameFieldName && tFieldName == sFieldName) {
-				copyValue(sValue, tValue)
+		if isMapSameFieldName && !isMapped {
+			if sField := srv.FieldByName(tFieldName); sField.IsValid() {
+				copyValue(sField, tValue)
 				isMapped = true
 			}
 		}
